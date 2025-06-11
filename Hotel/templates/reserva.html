@@ -1,0 +1,52 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Reserva do Quarto{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'Hotel/css/reserva.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<div class="reserva-tudo">
+    <main class="reserva-form-wrapper">
+        <h2>Reservar Quarto {{ quarto.num_quarto }}</h2>
+
+        {% if messages %}
+        <ul class="mensagens" style="color: red; list-style: none; padding: 0;">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="nome_cliente">Nome do Cliente:</label>
+            <input type="text" name="nome_cliente" id="nome_cliente" required
+                value="{{ nome_cliente|default_if_none:'' }}">
+
+            <label for="telefone_cliente">Telefone:</label>
+            <input type="text" name="telefone_cliente" id="telefone_cliente" required
+                value="{{ telefone_cliente|default_if_none:'' }}">
+
+            <label for="data_checkin">Data de Check-in:</label>
+            <input type="date" name="data_checkin" id="data_checkin" required
+                value="{{ data_checkin|default_if_none:'' }}">
+
+            <label for="data_checkout">Data de Check-out:</label>
+            <input type="date" name="data_checkout" id="data_checkout" required
+                value="{{ data_checkout|default_if_none:'' }}">
+
+            <button type="submit">Reservar</button>
+        </form>
+
+    </main>
+</div>
+{% endblock %}
